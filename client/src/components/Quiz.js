@@ -15,7 +15,8 @@ const Quiz = () => {
     function onNext() {
         if (trace < queue.length)
             dispatch(MoveNextQuestion())
-        dispatch(PushAnswer(check))
+        if (result.length <= trace)
+            dispatch(PushAnswer(check))
     }
     function onPrev() {
         if (trace > 0)
@@ -34,7 +35,7 @@ const Quiz = () => {
             <h1 className='title text-light'>Quiz Application</h1>
             <Questions onChecked={onChecked} />
             <div className='grid'>
-                <button className='btn prev' onClick={onPrev}>Prev</button>
+                {trace > 0 ? <button className='btn prev' onClick={onPrev}>Prev</button> : <div></div>}
                 <button className='btn next' onClick={onNext}>Next</button>
             </div>
         </div>

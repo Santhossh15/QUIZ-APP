@@ -1,15 +1,24 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useFetchQuestion } from '../hooks/FetchQuestion'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateResultAction } from '../redux/result_reducer'
+import { updateResult } from '../hooks/setResult'
+
 const Questions = ({ onChecked }) => {
+    const [checked, setChecked] = useState(undefined)
+    const { trace } = useSelector(state => state.questions)
+    const result = useSelector(state => state.result.result)
     const [{ isLoading, apiData, serverError }] = useFetchQuestion();
     const questions = useSelector(state => state.questions.queue[state.questions.trace])
+    const dispatch = useDispatch()
     useEffect(() => {
-        console.log(questions);
-    })
+        dispatch(updateResult({ trace, checked }))
+    }, [checked])
     function onSelect(index) {
         onChecked(index)
+        setChecked(index)
+        dispatch(updateResult({ trace, checked }))
     }
     if (isLoading) return <h3 className='text-light'>isLoading</h3>
     if (serverError) return <h3 className='text-light'>{serverError.message || "Unknown Error"}</h3>
@@ -28,12 +37,12 @@ const Questions = ({ onChecked }) => {
                                 onChange={() => onSelect(index)}
                             />
                             <label className='text-primary' htmlFor={`ques${index}-option`}>{ques}</label>
-                            <div className='check checked'></div>
+                            <div className={`check${result[trace] === index ? "checked" : ""}`}></div>
                         </li>
                     ))
                 }
             </ul>
-        </div>
+        </div >
     )
 }
 

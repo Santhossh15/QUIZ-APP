@@ -9,21 +9,21 @@ const Quiz = () => {
     const result = useSelector(state => state.result.result)
     const { queue, trace } = useSelector(state => state.questions);
     const dispatch = useDispatch();
-    useEffect(() => {
-        console.log(trace)
-    })
+
     function onNext() {
-        if (trace < queue.length)
+        if (trace < queue.length) {
             dispatch(MoveNextQuestion())
-        if (result.length <= trace)
-            dispatch(PushAnswer(check))
+            if (result.length <= trace) {
+                dispatch(PushAnswer(check))
+            }
+        }
+        setChecked(undefined)
     }
     function onPrev() {
         if (trace > 0)
             dispatch(MovePreviousQuestion())
     }
     function onChecked(check) {
-        console.log(check)
         setChecked(check)
     }
     if (result.length && result.length >= queue.length) {

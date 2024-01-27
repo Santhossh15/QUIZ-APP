@@ -37,7 +37,7 @@ const Questions = ({ onChecked }) => {
                                 onChange={() => onSelect(index)}
                             />
                             <label className='text-primary' htmlFor={`ques${index}-option`}>{ques}</label>
-                            <div className={`check${result[trace] === index ? "checked" : ""}`}></div>
+                            <div className={`check ${result[trace] === index ? "checked" : ""}`}></div>
                         </li>
                     ))
                 }

@@ -2,9 +2,14 @@ import React from 'react'
 import "../styles/Result.css"
 import { Link } from 'react-router-dom'
 import ResultTable from './ResultTable'
+import { useDispatch } from 'react-redux'
+import { resetAllAction } from '../redux/question_reducer'
+import { resetResultAction } from '../redux/result_reducer'
 const Result = () => {
+    const dispatch = useDispatch()
     function onRestart() {
-        console.log("OncLick");
+        dispatch(resetAllAction())
+        dispatch(resetResultAction())
     }
     return (
 

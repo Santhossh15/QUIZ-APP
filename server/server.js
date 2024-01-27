@@ -2,6 +2,7 @@ import express from 'express'
 import morgan from "morgan"
 import cors from "cors"
 import { config } from 'dotenv'
+import router from './router/route.js'
 
 const app = express()
 
@@ -15,6 +16,9 @@ config()
 const port = process.env.PORT || 8080
 
 //Routes
+
+app.use("/api", router) //APIS
+
 app.get("/", (req, res) => {
     try {
         res.json("Get Request")
@@ -23,6 +27,7 @@ app.get("/", (req, res) => {
         res.json(error)
     }
 })
+
 app.listen(port, () => {
     console.log("Server Connected to http://localhost:${port}");
 })
